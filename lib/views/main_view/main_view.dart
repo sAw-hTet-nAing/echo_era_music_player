@@ -1,40 +1,43 @@
+import 'package:echo_era/core/utils/constants/app_dimesions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../data/video_data.dart';
+class MainView extends StatelessWidget {
+  final StatefulNavigationShell child;
+  const MainView({super.key, required this.child});
 
-class MainView extends StatefulWidget {
-  const MainView({super.key});
-
-  @override
-  State<MainView> createState() => _MainViewState();
-}
-
-class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-          shrinkWrap: true,
-          itemCount: DemoData.images.length,
-          itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () => context.goNamed('player',
-                  extra: DemoData.videos,
-                  queryParameters: {'index': index.toString()}),
-              child: Card(
-                child: Column(
-                  children: [
-                    Image.network(DemoData.images[index]),
-                    ListTile(
-                      title: Text(index.toString()),
-                      subtitle: const Text("Channel Name"),
-                    )
-                  ],
-                ),
-              ),
-            );
-          }),
+      body: child,
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: child.currentIndex,
+        onTap: (value) => child.goBranch(value),
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              CupertinoIcons.globe,
+              size: AppDimesions.normalIconSize,
+            ),
+            label: 'Browser',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.library_music,
+              size: AppDimesions.normalIconSize,
+            ),
+            label: 'Library',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              CupertinoIcons.settings,
+              size: AppDimesions.normalIconSize,
+            ),
+            label: 'Setting',
+          ),
+        ],
+      ),
     );
   }
 }

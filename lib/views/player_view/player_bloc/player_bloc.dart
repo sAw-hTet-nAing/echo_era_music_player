@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:echo_era/views/player_view/player_bloc/player_event.dart';
 import 'package:echo_era/views/player_view/player_bloc/player_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,15 +47,14 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     on<PlayerEventOnSkipForward>((event, emit) {
       if (state.index < videoUrl.length - 1) {
         int currentIndex = (state.index + 1) % videoUrl.length;
-        print(currentIndex);
+
         videoPlayerController.dispose();
         videoPlayerController =
             VideoPlayerController.networkUrl(Uri.parse(videoUrl[currentIndex]));
-        print(videoPlayerController.value.errorDescription);
+
         if (videoPlayerController.value.hasError) {
-          print("This is an error");
           emit(state.copyWith(index: currentIndex + 1));
-          print(state.index);
+
           add(const PlayerEventOnSkipForward());
         } else {
           videoPlayerController.initialize().then((_) {
@@ -81,7 +78,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     on<PlayerEventOnSkipPrevious>((event, emit) {
       if (state.index > 0) {
         int currentIndex = (state.index - 1) % videoUrl.length;
-        print(currentIndex);
+
         videoPlayerController.dispose();
         videoPlayerController =
             VideoPlayerController.networkUrl(Uri.parse(videoUrl[currentIndex]));

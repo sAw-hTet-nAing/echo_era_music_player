@@ -1,5 +1,3 @@
-import 'package:echo_era/views/player_view/player_bloc/player_state.dart';
-
 abstract class PlayerEvent {
   const PlayerEvent();
 }
