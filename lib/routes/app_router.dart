@@ -5,6 +5,8 @@ import 'package:echo_era/views/library_view/library_view.dart';
 import 'package:echo_era/views/main_view/main_view.dart';
 import 'package:echo_era/views/player_view/player_view.dart';
 import 'package:echo_era/views/setting_view/setting_view.dart';
+import 'package:echo_era/views/web_view/web_view.dart';
+import 'package:echo_era/views/web_view/webview_bloc/web_view_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -28,15 +30,28 @@ class AppRouter {
             branches: [
               StatefulShellBranch(routes: [
                 GoRoute(
-                  name: AppRouteName.browser,
-                  path: '/browser',
-                  builder: (BuildContext context, GoRouterState state) {
-                    return BlocProvider(
-                      create: (context) => BrowserBloc(),
-                      child: const BrowserView(),
-                    );
-                  },
-                ),
+                    name: AppRouteName.browser,
+                    path: '/browser',
+                    builder: (BuildContext context, GoRouterState state) {
+                      return BlocProvider(
+                        create: (context) => BrowserBloc(),
+                        child: const BrowserView(),
+                      );
+                    },
+                    routes: [
+                      GoRoute(
+                        name: AppRouteName.web,
+                        path: 'webView',
+                        builder: (BuildContext context, GoRouterState state) {
+                          return BlocProvider(
+                            create: (context) => WebViewBloc(),
+                            child: WebView(
+                              url: state.uri.queryParameters['url'] as String,
+                            ),
+                          );
+                        },
+                      ),
+                    ]),
               ]),
               StatefulShellBranch(routes: [
                 GoRoute(

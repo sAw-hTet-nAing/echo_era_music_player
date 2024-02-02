@@ -2,6 +2,7 @@ import 'package:echo_era/core/theme/app_theme.dart';
 import 'package:echo_era/routes/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,10 +16,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerConfig: AppRouter.router,
-      theme: AppTheme.themeData,
+    return ResponsiveSizer(
+      builder: (ontext, orientation, screenType) => MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerConfig: AppRouter.router,
+        theme: AppTheme.themeData,
+      ),
     );
   }
 }

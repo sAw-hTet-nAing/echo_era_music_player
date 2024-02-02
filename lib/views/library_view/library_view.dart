@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../data/video_data.dart';
+import '../../data/local_data/video_data.dart';
 
 class LibraryView extends StatefulWidget {
   const LibraryView({super.key});
